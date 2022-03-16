@@ -1,7 +1,7 @@
 import express from "express";
 import ejs from "ejs";
 import path from "path";
-import pdf from "html-pdf";
+import puppeteer from "puppeteer";
 
 const app = express();
 
@@ -25,6 +25,32 @@ const passengers = [
   },
 ];
 
+app.get("/pdf", async (request, response) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto("http://localhost:5000/", {
+    waitUntil: "networkidle0",
+  });
+
+  const pdf = await page.pdf({
+    printBackground: true,
+    format: "letter",
+    margin: {
+      top: "20px",
+      bottom: "40px",
+      left: "20px",
+      right: "20px",
+    },
+  });
+
+  await browser.close();
+
+  response.contentType("application/pdf");
+
+  return response.send(pdf);
+});
+
 app.get("/", (req, response) => {
   const filePath = path.join(__dirname, "print.ejs");
 
@@ -33,27 +59,12 @@ app.get("/", (req, response) => {
       return response.send("Erro na leitura do arquivo");
     }
 
-    const options = {
-      height: "11.25in",
-      width: "8.5in",
-      header: {
-        height: "20mm",
-      },
-      footer: {
-        height: "20mm",
-      },
-    };
-
-    // criar o pdf
-    pdf.create(html, options).toFile("report.pdf", (err, data) => {
-      if (err) {
-        return response.send("Erro ao gerar o PDF");
-      }
-
-      // enviar para o navegador
-      return response.send('Arquivo PDF gerado com sucesso!');
-    });
+    return response.send(html);
   });
+  return response.status(200).send(passengers);
 });
+
+// const filePath = path.join(__dirname, "print.ejs");
+// console.log(filePath);
 
 app.listen(port, () => console.log(`Running on port ${port}`));

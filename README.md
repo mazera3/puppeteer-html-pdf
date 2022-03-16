@@ -15,3 +15,8 @@
 
 # Dados
 - Criar array com umas coleção de objetos: `const dados[{},{},{}...]`
+
+# Parte 2
+- [aula](https://youtu.be/AoU7aEdTldE)
+- npm install puppeteer && npm instal @types/puppeteer -D
+- git commit -m "parte 2" & git branch -M parte 2 & git remote add origin
