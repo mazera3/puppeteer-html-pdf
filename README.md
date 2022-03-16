@@ -13,10 +13,16 @@
 # EJS
 - npm install ejs html-pdf && npm install --save-dev @types/ejs && npm install --save-dev @types/html-pdf
 
+# Tailwind
+- npm install -D tailwindcss
+- Criar tailwind.config.js -> npx tailwindcss init
+- [site](https://tailwindcss.com/docs/installation)
+- [CDN](https://unpkg.com/tailwindcss/dist/tailwind.min.css)
+
 # Dados
 - Criar array com umas coleção de objetos: `const dados[{},{},{}...]`
 
 # Parte 2
 - [aula](https://youtu.be/AoU7aEdTldE)
 - npm install puppeteer && npm instal @types/puppeteer -D
-- git commit -m "parte 2" & git branch -M parte 2 & git remote add origin
+- git add . && git commit -m "parte 2" && git branch -M parte2 && git push -u origin parte2
